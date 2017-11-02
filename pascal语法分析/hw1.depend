@@ -1,0 +1,62 @@
+# depslib dependency file v1.0
+1508852852 source:f:\working\研究生\面向对象编程技术\hw1\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	"PascalCheck.h"
+
+1508853030 f:\working\研究生\面向对象编程技术\hw1\pascalcheck.h
+	<iostream>
+	<stack>
+
+1508893288 source:f:\working\研究生\面向对象编程技术\hw1\pascalcheck.cpp
+	"PascalCheck.h"
+	<sstream>
+	<string.h>
+
+1508852852 source:f:\working\研究生\面向对象编程技术\hw\hw1\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	"PascalCheck.h"
+
+1508853030 f:\working\研究生\面向对象编程技术\hw\hw1\pascalcheck.h
+	<iostream>
+	<stack>
+
+1508893288 source:f:\working\研究生\面向对象编程技术\hw\hw1\pascalcheck.cpp
+	"PascalCheck.h"
+	<sstream>
+	<string.h>
+
+1508985900 source:f:\working\研究生\面向对象编程技术\上交作业\hw1\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	"PascalCheck.h"
+
+1508984145 f:\working\研究生\面向对象编程技术\上交作业\hw1\pascalcheck.h
+	<iostream>
+	<stack>
+
+1508985707 source:f:\working\研究生\面向对象编程技术\上交作业\hw1\pascalcheck.cpp
+	"PascalCheck.h"
+	<sstream>
+	<string.h>
+
+1509635316 source:c:\users\xinxinsky\desktop\研一\面向对象\hw1\pascalcheck.cpp
+	"PascalCheck.h"
+	<sstream>
+	<string.h>
+
+1509635083 c:\users\xinxinsky\desktop\研一\面向对象\hw1\pascalcheck.h
+	<iostream>
+	<stack>
+	<vector>
+
+1509635395 source:c:\users\xinxinsky\desktop\研一\面向对象\hw1\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	"PascalCheck.h"
+

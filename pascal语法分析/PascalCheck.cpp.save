@@ -1,0 +1,224 @@
+#include "PascalCheck.h"
+#include <sstream>
+#include <string.h>
+
+//大小写转换
+void PascalCheck::UpperToLower(string &str)
+{
+	char *str3;
+	str3 = (char *)str.c_str();
+	for (int i = 0; i < str.length(); i++) {  //对每个单词都进行判断
+		if (str3[i] >= 'A'&&str3[i] <= 'Z') {
+			str3[i] += 'a' - 'A';
+		}
+	}
+	str = str3;
+	//cout << str << endl;
+	//transform(str.begin(), str.end(), str.begin(), tolower);//会出错
+}
+
+//检查单词类型，返回int是为了使用switch语句
+int PascalCheck::GetKeyType(const string &str)
+{
+	int key_pos;
+	key_pos = str.find("end");              //查找end字符串
+	if (key_pos == 0) return 5;
+	key_pos = _stricmp(str.c_str(), "if");  //查找if字符串
+	if (key_pos == 0) return 1;
+	key_pos = _stricmp(str.c_str(), "then");
+	if (key_pos == 0) return 2;
+	key_pos = _stricmp(str.c_str(), "else");
+	if (key_pos == 0) return 3;
+	key_pos = _stricmp(str.c_str(), "begin");
+	if (key_pos == 0) return 4;
+	key_pos = _stricmp(str.c_str(), "end");
+	if (key_pos == 0) return 5;
+
+	return 0;
+}
+
+//分析每个单词内容
+void PascalCheck::AnalyseOneString(const string &one_str)
+{
+	int key_type = 0;
+	key_type = GetKeyType(one_str.str);     //获得单词类型
+	//if (key_type) cout << one_str.str << endl;
+	STR_LINE tmp1, tmp2;
+
+	switch (key_type) {
+	case 1:                                 //if直接压栈
+		one_str.str = "if";
+		if (flag_else) {	                //出现if/then/if，则弹出if/then
+			flag_else = 0;
+			str_line.pop();
+			str_line.pop();
+		}
+		str_line.push(one_str);
+		break;
+	case 2:                                 //then判断前面是否有if
+		if (!str_line.empty()) {            //要出栈前都需要判断栈是否为空
+			old_str = str_line.top();
+		}
+		else {
+			old_str.str = "";
+		}
+		if (old_str.str != "if") {          //then前面无if，报错
+			err_tmp.str = " line find error,lack of if";
+			err_tmp.line = one_str.line;
+			err_line.push_back(err_tmp);
+		}
+		else {
+			one_str.str = "then";           //if/then则入栈等待else
+			str_line.push(one_str);
+			flag_else = 1;
+		}
+
+		break;
+	case 3:                                 //else前面判断是否有if/then
+		if (!str_line.empty()) {
+			old_str = str_line.top();
+		}
+		else {
+			old_str.str = "";
+		}
+		if (old_str.str != "then") {         //看是否存在if then
+			if (old_str.str == "if") {
+				err_tmp.str = " line find error,lack of then";
+				err_tmp.line = one_str.line;
+				err_line.push_back(err_tmp);
+
+				str_line.pop();
+			}
+			else {
+				err_tmp.str = " line find error,lack of if/then";
+				err_tmp.line = one_str.line;
+				err_line.push_back(err_tmp);
+			}
+		}
+		else {                               //存在if/then 则出栈
+			flag_else = 0;
+			str_line.pop();
+			str_line.pop();
+		}
+		break;
+	case 4:                                  //begin直接压栈
+		one_str.str = "begin";
+		str_line.push(one_str);
+		break;
+	case 5:                                  //end判断是否有begin，或是if/then begin
+		if (!str_line.empty()) {
+			old_str = str_line.top();
+		}
+		else {
+			old_str.str = "";
+		}
+
+		if (flag_else && old_str.str!="begin") {//判断是否if/then 后遇到end了
+			flag_end_ifthen = 1;
+			tmp1 = str_line.top();
+			str_line.pop();
+
+			tmp2 = str_line.top();
+			str_line.pop();
+
+			if (!str_line.empty()) {
+				old_str = str_line.top();
+			}
+			else {
+				old_str.str = "";
+			}
+		}
+		if (old_str.str != "begin") {
+			err_tmp.str = " line find error,lack of begin";
+			err_tmp.line = one_str.line;
+			err_line.push_back(err_tmp);
+			if (flag_end_ifthen) {//保存if then
+				flag_end_ifthen = 0;
+				str_line.push(tmp2);
+				str_line.push(tmp1);
+			}
+		}
+		else {
+			str_line.pop();
+			if (flag_end_ifthen) {              //不保存if/then
+				flag_end_ifthen = 0;
+				flag_else = 0;
+			}
+		}
+
+		break;
+	default:break;
+	}
+}
+
+//分析整一行字符串内容
+void PascalCheck::AnalyseOneLine(const STR_LINE &one_str)
+{
+	stringstream stringstream;
+	stringstream << one_str.str;            //
+	STR_LINE one_word;
+	while (stringstream >> one_word) {   //分割字符串
+		AnalyseOneString(one_word);          //分析每一个单词含义
+	}
+}
+
+//分析栈底的数据
+void PascalCheck::AnalyseRestStack()
+{
+	STR_LINE one_str;
+	//查看栈里是否存在if then else 之类的
+	while (!str_line.empty()) {
+		one_str = str_line.top();
+        int key_type = 0;
+        key_type = GetKeyType(one_str.str); //获得单词类型
+        switch(key_type){
+        case 1:                             //有if说明缺了then
+			err_tmp.str = " line find error,lack of then";
+			err_tmp.line = one_str.line;
+			err_line.push_back(err_tmp);
+        break;
+        case 2:                             //有then则检查前面有没有if
+			str_line.pop();			        //这里把then弹出
+			if (!str_line.empty()) {
+				old_str = str_line.top();
+				if (old_str.str != "if"){   //是if则弹出，否则报错
+					err_tmp.str = " line find error,lack of if";
+					err_tmp.line = one_str.line;
+					err_line.push_back(err_tmp);
+				}
+			}
+			else {                          //缺了if
+				err_tmp.str = " line find error,lack of if";
+				err_tmp.line = one_str.line;
+				err_line.push_back(err_tmp);
+				str_line.push(one_str);    //把then压栈
+			}
+        break;
+        case 4:                            //有begin说明缺了if
+			err_tmp.str = " line find error,lack of end";
+			err_tmp.line = one_str.line;
+			err_line.push_back(err_tmp);
+        break;
+        default:break;
+        }
+		str_line.pop();
+	}
+}
+void PascalCheck::PrintError()
+{
+	for (int i = 0; i < err_line.size(); i++)
+	{
+		for (int j = i; j < err_line.size(); j++)
+		{
+			if (err_line[i].line > err_line[j].line)
+			{
+				STR_LINE temp = err_line[i];
+				err_line[i] = err_line[j];
+				err_line[j] = temp;
+
+			}
+		}
+		cout << err_line[i].line << err_line[i].str << endl;
+	}
+
+}

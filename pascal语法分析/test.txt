@@ -1,0 +1,38 @@
+Program Salaries;
+Var F:Text;
+    Salary,max:integer;
+    Name:String[20];
+    MaxName:String;
+    Sex:0..1;
+	begin
+		 Max:=0;
+		 Assign(F,'E:\Exam\Salary.txt');
+		 Reset(F);
+		 While not Eof(F) Do
+		 Begin
+			  ReadLn(F,Name,Sex,Salary);
+			  if (Sex=1) and (Salary>Max) then
+			  bEGin
+				 Max:=Salary;
+				 MaxName:=Name;
+			  end
+		eND
+		if  then 
+		if
+	eND..
+else
+if 
+end
+
+
+     Close(F);
+     Writeln;
+     WriteLn('The highest ladis salary is for Mrs. ',MaxName,'By Value:',Max);
+     Writeln;
+     Writeln;
+     Writeln;
+     Writeln;
+     WriteLn('Press Enter To Exit');
+     ReadLn
+end.
+
