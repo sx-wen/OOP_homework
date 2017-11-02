@@ -1,0 +1,38 @@
+#ifndef GA_H_INCLUDED
+#define GA_H_INCLUDED
+
+#include <iostream>
+
+class ga{
+public:
+    ga(void);
+    ~ga(void);
+    bool Init(double p_cross,double p_mutate,int pop,int gene_len);
+	void Select(void);
+    void Crossover(void);
+	void Mutate(void);
+	int FitnessFcn(int idx);
+	void PrintUnit(const int idx);
+	void PrintBestFit()const;
+    bool **genes;
+    double *fitness;
+	double *rfitness;	//个体概率
+	double *cfitness;	//累加概率
+
+private:
+	double p_cross;
+	double p_mutate;
+	double p_init;
+	int pop;
+	int gene_len;
+	bool **old_gene;
+	double fit_sum;
+	int SelectFindNext(double pro);
+	void SelectValid(int idx);
+	void SaveBestGroup();
+	bool *genes_generation;
+	double fit_generation;
+
+};
+
+#endif // GA_HPP_INCLUDED

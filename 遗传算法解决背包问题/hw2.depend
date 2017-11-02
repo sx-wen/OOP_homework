@@ -1,0 +1,65 @@
+# depslib dependency file v1.0
+1508894169 source:f:\working\研究生\面向对象编程技术\hw2\ga.cpp
+	"ga.h"
+	<stdlib.h>
+	<iostream>
+
+1508681941 f:\working\研究生\面向对象编程技术\hw2\ga.h
+	<iostream>
+
+1508894319 source:f:\working\研究生\面向对象编程技术\hw2\main.cpp
+	<iostream>
+	<string>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	"ga.h"
+
+1508894169 source:f:\working\研究生\面向对象编程技术\hw\hw2\ga.cpp
+	"ga.h"
+	<stdlib.h>
+	<iostream>
+
+1508681941 f:\working\研究生\面向对象编程技术\hw\hw2\ga.h
+	<iostream>
+
+1508894851 source:f:\working\研究生\面向对象编程技术\hw\hw2\main.cpp
+	<iostream>
+	<string>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	"ga.h"
+
+1508987629 source:f:\working\研究生\面向对象编程技术\上交作业\hw2\main.cpp
+	<iostream>
+	<string>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	"ga.h"
+
+1508987670 f:\working\研究生\面向对象编程技术\上交作业\hw2\ga.h
+	<iostream>
+
+1508987652 source:f:\working\研究生\面向对象编程技术\上交作业\hw2\ga.cpp
+	"ga.h"
+	<stdlib.h>
+	<iostream>
+
+1509636417 source:c:\users\xinxinsky\desktop\研一\面向对象\hw2\ga.cpp
+	"ga.h"
+	<stdlib.h>
+	<iostream>
+
+1509636457 c:\users\xinxinsky\desktop\研一\面向对象\hw2\ga.h
+	<iostream>
+
+1508987629 source:c:\users\xinxinsky\desktop\研一\面向对象\hw2\main.cpp
+	<iostream>
+	<string>
+	<stdlib.h>
+	<time.h>
+	<math.h>
+	"ga.h"
+
